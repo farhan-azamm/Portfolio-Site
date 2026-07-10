@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="style.css" />
+  <title>Farhan Azam</title>
+</head>
+
+<body>
+  <div class="flipbook">
+    
+    
+    <div>
+      <img src="1.png" alt="" />
+      
+    </div>
+    <div>
+      <img src="2.png" alt="" />
+      
+    </div>
+    <div>
+      <img src="3.png" alt="" />
+      
+    </div>
+    <div>
+      <img src="4.png" alt="" />
+      
+    </div>
+    <div>
+      <img src="5.png" alt="" />
+      
+    </div>
+     
+    <div>
+      <img src="6.png" alt="" />
+      
+    </div>
+    
+  </div>
+
+  <script src="jquery.js"></script>
+  <script src="turn.js"></script>
+  <script>
+    var $flipbook = $(".flipbook");
+
+    // Decide sizing + display mode based on screen width
+    function getSettings() {
+      var isMobile = $(window).width() <= 768;
+      var maxW = Math.min($(window).width() * 0.95, isMobile ? 700 : 1400);
+      var maxH = $(window).height() * 0.9;
+
+      var width, height;
+      if (isMobile) {
+        // single page: keep a portrait-ish page ratio (using half of the 1400x900 book)
+        width = Math.min(maxW, maxH * (700 / 900));
+        height = width * (900 / 700);
+      } else {
+        width = Math.min(maxW, maxH * (1400 / 900));
+        height = width * (900 / 1400);
+      }
+
+      return {
+        width: width,
+        height: height,
+        display: isMobile ? "single" : "double"
+      };
+    }
+
+    var settings = getSettings();
+
+    $flipbook.turn({
+      width: settings.width,
+      height: settings.height,
+      display: settings.display,
+      autoCenter: true
+    });
+
+    // Re-check on resize/orientation change
+    $(window).on("resize", function () {
+      var s = getSettings();
+      var current = $flipbook.turn("display");
+
+      if (current !== s.display) {
+        $flipbook.turn("display", s.display);
+      }
+
+      $flipbook.turn("size", s.width, s.height);
+    });
+  </script>
+</body>
+
+</html>
