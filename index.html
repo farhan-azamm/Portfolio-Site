@@ -5,39 +5,46 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
   <title>Farhan Azam</title>
 </head>
 
 <body>
+  <nav class="social-links" aria-label="Social media links">
+    <a href="https://www.instagram.com/farhan.azamm/" aria-label="Instagram" title="Instagram" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-instagram" aria-hidden="true"></i></a>
+    <a href="https://www.linkedin.com/in/farhan-azam-03846a236/" aria-label="LinkedIn" title="LinkedIn" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-linkedin-in" aria-hidden="true"></i></a>
+    <a href="https://x.com/FarhanAzamm" aria-label="X" title="X" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-x-twitter" aria-hidden="true"></i></a>
+    <a href="https://www.facebook.com/profile.php?id=61584207943810" aria-label="Facebook" title="Facebook" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-facebook-f" aria-hidden="true"></i></a>
+    <a href="https://github.com/farhan-azamm" aria-label="GitHub" title="GitHub" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-github" aria-hidden="true"></i></a>
+  </nav>
+
+  <p class="turn-hint">To navigate the portfolio, click or drag a page corner.</p>
+
   <div class="flipbook">
-    
-    
     <div>
       <img src="1.png" alt="" />
-      
     </div>
     <div>
       <img src="2.png" alt="" />
-      
     </div>
     <div>
       <img src="3.png" alt="" />
-      
     </div>
     <div>
       <img src="4.png" alt="" />
-      
     </div>
     <div>
       <img src="5.png" alt="" />
-      
     </div>
-     
     <div>
       <img src="6.png" alt="" />
-      
     </div>
-    
+    <div>
+      <img src="7.png" alt="" />
+    </div>
+    <div>
+      <img src="8.png" alt="" />
+    </div>
   </div>
 
   <script src="jquery.js"></script>
@@ -45,20 +52,30 @@
   <script>
     var $flipbook = $(".flipbook");
 
+    function getViewportHeight() {
+      return window.visualViewport ? window.visualViewport.height : window.innerHeight;
+    }
+
     // Decide sizing + display mode based on screen width
     function getSettings() {
       var isMobile = $(window).width() <= 768;
-      var maxW = Math.min($(window).width() * 0.95, isMobile ? 700 : 1400);
-      var maxH = $(window).height() * 0.9;
+      var isCompact = $(window).width() <= 1100;
+      var maxW = Math.min(
+        isMobile ? $(window).width() * 0.95 : $(window).width() - 260,
+        isMobile ? 700 : 1400
+      );
+      // Use nearly the full viewport, leaving only room for the instruction above.
+      var maxH = getViewportHeight() - (isCompact ? 160 : 64);
 
       var width, height;
       if (isMobile) {
-        // single page: keep a portrait-ish page ratio (using half of the 1400x900 book)
-        width = Math.min(maxW, maxH * (700 / 900));
-        height = width * (900 / 700);
+        // Single page: match the magazine artwork's 2:3 portrait ratio.
+        width = Math.min(maxW, maxH * (2 / 3));
+        height = width * (3 / 2);
       } else {
-        width = Math.min(maxW, maxH * (1400 / 900));
-        height = width * (900 / 1400);
+        // Two 2:3 pages side by side create a 4:3 book.
+        width = Math.min(maxW, maxH * (4 / 3));
+        height = width * (3 / 4);
       }
 
       return {
@@ -74,11 +91,46 @@
       width: settings.width,
       height: settings.height,
       display: settings.display,
-      autoCenter: true
+      autoCenter: false,
+      duration: 1000,
+      acceleration: true,
+      gradients: true
     });
 
+    var $socialLinks = $(".social-links");
+    var $turnHint = $(".turn-hint");
+
+    function positionSocialLinks() {
+      if ($(window).width() <= 1100) {
+        $socialLinks.css("left", "");
+        return;
+      }
+
+      var bookLeft = $flipbook.offset().left;
+      var panelWidth = $socialLinks.outerWidth();
+      $socialLinks.css("left", Math.max(16, bookLeft - panelWidth - 24));
+    }
+
+    function positionTurnHint() {
+      var bookTop = $flipbook.offset().top;
+      var hintHeight = $turnHint.outerHeight();
+      var hintGap = 16;
+      var isCompact = $(window).width() <= 1100;
+      var hintLeft = isCompact
+        ? $(window).width() / 2
+        : $flipbook.offset().left + $flipbook.width() * 0.75;
+
+      $turnHint.css({
+        left: hintLeft,
+        top: Math.max(8, bookTop - hintHeight - hintGap)
+      });
+    }
+
+    positionSocialLinks();
+    positionTurnHint();
+
     // Re-check on resize/orientation change
-    $(window).on("resize", function () {
+    function resizeFlipbook() {
       var s = getSettings();
       var current = $flipbook.turn("display");
 
@@ -87,7 +139,36 @@
       }
 
       $flipbook.turn("size", s.width, s.height);
+      positionSocialLinks();
+      positionTurnHint();
+    }
+
+    $(window).on("resize orientationchange", resizeFlipbook);
+
+    if (window.visualViewport) {
+      window.visualViewport.addEventListener("resize", resizeFlipbook);
+    }
+
+    // Keep the document fixed on touch devices; page turns still use Turn.js touch events.
+    document.addEventListener("touchmove", function (event) {
+      event.preventDefault();
+    }, { passive: false });
+
+    window.addEventListener("wheel", function (event) {
+      event.preventDefault();
+    }, { passive: false });
+
+    window.addEventListener("keydown", function (event) {
+      var scrollKeys = [" ", "ArrowUp", "ArrowDown", "PageUp", "PageDown", "Home", "End"];
+
+      if (scrollKeys.indexOf(event.key) !== -1) {
+        event.preventDefault();
+      }
     });
+
+    window.addEventListener("scroll", function () {
+      window.scrollTo(0, 0);
+    }, { passive: true });
   </script>
 </body>
 

@@ -924,16 +924,16 @@
                           a != i[1]
                       )
                   : c
-                      .flip("hover", !1 === e)
+                  .flip("hover", !1)
                       .flip("disable", a != h[0] && a != h[1]);
         } else
           for (a in b.pageWrap)
             n(a, b.pageWrap) &&
               ((d = g._setPageLoc.call(this, a)),
-              b.pages[a] &&
+                b.pages[a] &&
                 b.pages[a]
                   .flip("disable", b.disabled || 1 != d)
-                  .flip("hover", !0)
+                  .flip("hover", !1)
                   .flip("z", null));
         return this;
       },
