@@ -18,7 +18,7 @@
     <a href="https://github.com/farhan-azamm" aria-label="GitHub" title="GitHub" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-github" aria-hidden="true"></i></a>
   </nav>
 
-  <p class="turn-hint">On mobile, swipe or tap a page side to navigate.</p>
+  <p class="turn-hint">Tap or drag a page corner to navigate the portfolio.</p>
 
   <div class="flipbook">
     <div>
@@ -148,61 +148,6 @@
     if (window.visualViewport) {
       window.visualViewport.addEventListener("resize", resizeFlipbook);
     }
-
-    // Turn.js only recognises drags that begin in a small corner area. On touch
-    // screens the active page layer can change, making that hit area unreliable.
-    // Handle phone gestures at the book level instead, so every visible page has
-    // the same swipe and side-tap behaviour.
-    (function addMobileNavigation() {
-      var startX = 0;
-      var startY = 0;
-      var startTime = 0;
-      var mobileQuery = window.matchMedia("(max-width: 768px)");
-      var book = $flipbook[0];
-
-      book.addEventListener("touchstart", function (event) {
-        if (!mobileQuery.matches) return;
-        event.stopImmediatePropagation();
-        if (event.touches.length !== 1) return;
-        var touch = event.touches[0];
-        startX = touch.clientX;
-        startY = touch.clientY;
-        startTime = Date.now();
-      }, { capture: true, passive: true });
-
-      book.addEventListener("touchmove", function (event) {
-        if (mobileQuery.matches) event.stopImmediatePropagation();
-      }, { capture: true, passive: true });
-
-      book.addEventListener("touchend", function (event) {
-        if (!mobileQuery.matches) return;
-        event.stopImmediatePropagation();
-        if (!startTime || $flipbook.turn("animating")) {
-          startTime = 0;
-          return;
-        }
-
-        var touch = event.changedTouches[0];
-        var deltaX = touch.clientX - startX;
-        var deltaY = touch.clientY - startY;
-        var elapsed = Date.now() - startTime;
-        var isSwipe = Math.abs(deltaX) >= 40 && Math.abs(deltaX) > Math.abs(deltaY);
-        var bookBounds = book.getBoundingClientRect();
-        var sideTap = elapsed < 350 && Math.abs(deltaX) < 12 && Math.abs(deltaY) < 12;
-
-        startTime = 0;
-
-        if (isSwipe) {
-          $flipbook.turn(deltaX < 0 ? "next" : "previous");
-        } else if (sideTap) {
-          if (touch.clientX > bookBounds.left + bookBounds.width * 0.66) {
-            $flipbook.turn("next");
-          } else if (touch.clientX < bookBounds.left + bookBounds.width * 0.34) {
-            $flipbook.turn("previous");
-          }
-        }
-      }, { capture: true, passive: true });
-    })();
 
     window.addEventListener("wheel", function (event) {
       event.preventDefault();
