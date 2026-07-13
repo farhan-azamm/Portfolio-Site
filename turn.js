@@ -826,11 +826,13 @@
         var d = c.data().f,
           e = d.opts.turn,
           h = e.data();
-        c =
+          c =
           "single" == h.display
-            ? "br" == b.corner || "tr" == b.corner
-              ? b.x < c.width() / 2
-              : b.x > c.width() / 2
+            ? // On phones, commit once the page has been dragged one quarter across.
+              // Requiring it to cross the midpoint made normal short drags snap back.
+              "br" == b.corner || "tr" == b.corner
+              ? b.x < c.width() * 0.75
+              : b.x > c.width() * 0.25
             : 0 > b.x || b.x > c.width();
         if (200 > new Date().getTime() - d.time || c)
           a.preventDefault(), g._turnPage.call(e, d.opts.next);
