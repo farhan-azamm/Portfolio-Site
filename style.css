@@ -25,7 +25,6 @@ body {
     min-height: 100%;
 	overflow: hidden;
 	overscroll-behavior: none;
-	touch-action: none;
 	background: radial-gradient(ellipse at 50% 42%, #24243a 0%, #0c0c19 45%, #000008 100%);
 }
 
@@ -95,6 +94,11 @@ body {
 .flipbook {
     position: relative;
     top: 32px;
+    /* Keep browser gestures out of the book without cancelling Turn.js events globally. */
+    touch-action: none;
+    -webkit-user-select: none;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
     box-shadow: 0 28px 72px rgba(0, 0, 0, 0.72), 0 8px 20px rgba(0, 0, 0, 0.5);
     /* width/height are now set dynamically by turn.js in index.html
        based on screen size, so no fixed dimensions here */

@@ -18,7 +18,7 @@
     <a href="https://github.com/farhan-azamm" aria-label="GitHub" title="GitHub" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-github" aria-hidden="true"></i></a>
   </nav>
 
-  <p class="turn-hint">To navigate the portfolio, click or drag a page corner.</p>
+  <p class="turn-hint">Tap or drag a page corner to navigate the portfolio.</p>
 
   <div class="flipbook">
     <div>
@@ -92,7 +92,7 @@
       height: settings.height,
       display: settings.display,
       autoCenter: false,
-      duration: 1000,
+      duration: 600,
       acceleration: true,
       gradients: true
     });
@@ -148,11 +148,6 @@
     if (window.visualViewport) {
       window.visualViewport.addEventListener("resize", resizeFlipbook);
     }
-
-    // Keep the document fixed on touch devices; page turns still use Turn.js touch events.
-    document.addEventListener("touchmove", function (event) {
-      event.preventDefault();
-    }, { passive: false });
 
     window.addEventListener("wheel", function (event) {
       event.preventDefault();
