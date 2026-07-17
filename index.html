@@ -137,18 +137,23 @@
       });
     });
 
-    // Re-check on resize/orientation change
+    // Re-check on resize/orientation change. Re-applying the display mode is
+    // intentional: Turn.js can retain page wrappers from the previous mode
+    // while DevTools (or a device rotation) is changing the viewport.
+    var resizeFrame;
     function resizeFlipbook() {
-      var s = getSettings();
-      var current = $flipbook.turn("display");
+      cancelAnimationFrame(resizeFrame);
+      resizeFrame = requestAnimationFrame(function () {
+        var s = getSettings();
 
-      if (current !== s.display) {
-        $flipbook.turn("display", s.display);
-      }
+        $flipbook
+          .turn("display", s.display)
+          .turn("size", s.width, s.height)
+          .turn("update");
 
-      $flipbook.turn("size", s.width, s.height);
-      positionSocialLinks();
-      positionTurnHint();
+        positionSocialLinks();
+        positionTurnHint();
+      });
     }
 
     $(window).on("resize orientationchange", resizeFlipbook);
