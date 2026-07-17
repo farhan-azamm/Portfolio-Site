@@ -9,7 +9,7 @@
   <title>Farhan Azam</title>
 </head>
 
-<body>
+<body class="is-loading">
   <nav class="social-links" aria-label="Social media links">
     <a href="https://www.instagram.com/farhan.azamm/" aria-label="Instagram" title="Instagram" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-instagram" aria-hidden="true"></i></a>
     <a href="https://www.linkedin.com/in/farhan-azam-03846a236/" aria-label="LinkedIn" title="LinkedIn" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-linkedin-in" aria-hidden="true"></i></a>
@@ -129,13 +129,36 @@
     positionSocialLinks();
     positionTurnHint();
 
-    // Avoid showing the images at their natural size before Turn.js has applied
-    // the mobile viewport dimensions.
-    requestAnimationFrame(function () {
+    // Show the portfolio only after its images have loaded and Turn.js has
+    // applied the viewport dimensions, rather than revealing partial content.
+    function revealPortfolio() {
       requestAnimationFrame(function () {
-        $flipbook.addClass("is-ready");
+        requestAnimationFrame(function () {
+          $flipbook.addClass("is-ready");
+          $("body").removeClass("is-loading");
+        });
       });
-    });
+    }
+
+    var $images = $flipbook.find("img");
+    var remainingImages = $images.length;
+
+    if (!remainingImages) {
+      revealPortfolio();
+    } else {
+      $images.each(function () {
+        if (this.complete) {
+          remainingImages--;
+        } else {
+          $(this).one("load error", function () {
+            remainingImages--;
+            if (!remainingImages) revealPortfolio();
+          });
+        }
+      });
+
+      if (!remainingImages) revealPortfolio();
+    }
 
     // Re-check on resize/orientation change. Re-applying the display mode is
     // intentional: Turn.js can retain page wrappers from the previous mode

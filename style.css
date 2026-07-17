@@ -29,6 +29,12 @@ body {
 	background: radial-gradient(ellipse at 50% 42%, #24243a 0%, #0c0c19 45%, #000008 100%);
 }
 
+/* Reveal the portfolio as one complete view, after Turn.js has sized it. */
+body.is-loading .social-links,
+body.is-loading .turn-hint {
+    visibility: hidden;
+}
+
 .social-links {
     position: fixed;
     top: 50%;
