@@ -164,17 +164,17 @@
 
     // Decide sizing + display mode based on screen width
     function getSettings() {
-      var isMobile = $(window).width() <= 768;
+      var isSingle = $(window).width() <= 1024;
       var isCompact = $(window).width() <= 1100;
       var maxW = Math.min(
-        isMobile ? $(window).width() * 0.95 : $(window).width() - 260,
-        isMobile ? 700 : 1400
+        isSingle ? $(window).width() * 0.95 : $(window).width() - 260,
+        isSingle ? 700 : 1400
       );
       // Use nearly the full viewport, leaving only room for the instruction above.
       var maxH = getViewportHeight() - (isCompact ? 160 : 64);
 
       var width, height;
-      if (isMobile) {
+      if (isSingle) {
         // Single page: match the magazine artwork's 2:3 portrait ratio.
         width = Math.min(maxW, maxH * (2 / 3));
         height = width * (3 / 2);
@@ -187,7 +187,7 @@
       return {
         width: width,
         height: height,
-        display: isMobile ? "single" : "double"
+        display: isSingle ? "single" : "double"
       };
     }
 
