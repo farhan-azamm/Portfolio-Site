@@ -231,8 +231,15 @@ body:not(.is-loading) .loader {
     }
 
     .page-number {
-        font-size: 10px;
+        font-size: 8px;
         top: 10px;
     }
 
+}
+
+@media (max-width: 480px) {
+    .page-number {
+        font-size: 7px;
+        top: 6px;
+    }
 }

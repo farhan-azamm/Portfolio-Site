@@ -299,7 +299,18 @@
     }, { passive: false });
 
     window.addEventListener("wheel", function (event) {
-      event.preventDefault();
+      if (event.target.closest('.projects-scroll')) {
+        const el = event.target.closest('.projects-scroll');
+        const atTop = el.scrollTop <= 0;
+        const atBottom = el.scrollTop + el.clientHeight >= el.scrollHeight - 1;
+        if ((atTop && event.deltaY < 0) || (atBottom && event.deltaY > 0)) {
+          return;
+        }
+        event.preventDefault();
+        el.scrollTop += event.deltaY || event.detail || 0;
+      } else {
+        event.preventDefault();
+      }
     }, { passive: false });
 
     window.addEventListener("keydown", function (event) {
