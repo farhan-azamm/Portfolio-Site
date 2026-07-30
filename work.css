@@ -272,7 +272,7 @@
   }
 
   .projects {
-    gap: 14px;
+    gap: 22px;
   }
 
   .project {
@@ -298,7 +298,7 @@
   }
 
   .project-media {
-    min-height: 180px;
+    min-height: 140px;
   }
 
   .work-footer-divider {
@@ -328,7 +328,7 @@
   }
 
   .projects {
-    gap: 16px;
+    gap: 24px;
   }
 
   .project {
@@ -356,7 +356,7 @@
   }
 
   .project-media {
-    min-height: 220px;
+    min-height: 160px;
   }
 }
 
