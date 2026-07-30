@@ -124,6 +124,9 @@
   touch-action: pan-y;
   -webkit-overflow-scrolling: touch;
   min-height: 0;
+  background: #0a0a0a;
+  border-radius: 8px;
+  padding: 10px;
 }
 
 .project {
