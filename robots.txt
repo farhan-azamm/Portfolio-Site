@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /jquery.js
+Disallow: /turn.js
+
+Sitemap: https://farhan-azam.github.io/sitemap.xml
