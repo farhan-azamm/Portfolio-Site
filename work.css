@@ -129,7 +129,7 @@
 .project {
   display: grid;
   grid-template-columns: 1fr 1.1fr;
-  border: 1px solid rgba(167, 25, 25, 0.18);
+  border: 2px solid rgba(167, 25, 25, 0.35);
   border-radius: 10px;
   overflow: hidden;
   background: #F5F0E7;
@@ -137,6 +137,7 @@
   text-decoration: none;
   color: inherit;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
+  margin: 0 6px;
 }
 
 .project:hover {
@@ -254,7 +255,7 @@
 
 @media (max-width: 480px) {
   .work-page {
-    padding: 10px 10px 14px;
+    padding: 10px 6px 14px;
   }
 
   .work-header {
@@ -272,11 +273,12 @@
   }
 
   .projects {
-    gap: 22px;
+    gap: 28px;
   }
 
   .project {
     border-radius: 8px;
+    margin: 0 4px;
   }
 
   .project-info {
@@ -314,7 +316,7 @@
 
 @media (max-width: 720px) {
   .work-page {
-    padding: 12px 12px 16px;
+    padding: 12px 8px 16px;
     scroll-padding-right: 6px;
   }
 
@@ -328,11 +330,12 @@
   }
 
   .projects {
-    gap: 24px;
+    gap: 32px;
   }
 
   .project {
     grid-template-columns: 1fr !important;
+    margin: 0 6px;
   }
 
   .project.reverse .project-media {
@@ -362,7 +365,7 @@
 
 @media (max-width: 1024px) {
   .work-page {
-    padding: 14px 20px 20px;
+    padding: 14px 14px 20px;
     scroll-padding-right: 6px;
   }
 
@@ -376,7 +379,11 @@
   }
 
   .projects {
-    gap: 16px;
+    gap: 24px;
+  }
+
+  .project {
+    margin: 0 8px;
   }
 
   .project-info {
