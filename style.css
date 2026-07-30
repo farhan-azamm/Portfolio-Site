@@ -35,6 +35,38 @@ body.is-loading .turn-hint {
     visibility: hidden;
 }
 
+.loader {
+  width: 20px;
+  aspect-ratio: 1;
+  animation: l13-0 2s linear infinite;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 9999;
+}
+body:not(.is-loading) .loader {
+  display: none;
+}
+.loader::before,
+.loader::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: radial-gradient(at 30% 30%,#0000,#000a) red;
+  animation: l13-1 0.5s cubic-bezier(.5,-500,.5,500) infinite;
+}
+.loader::after {
+  animation-delay: -0.15s;
+}
+@keyframes l13-0 { 
+  100% { transform: translate(-50%, -50%) rotate(360deg)} 
+}
+@keyframes l13-1 { 
+  100% { transform: translate(0.5px)} 
+}
+
 .social-links {
     position: fixed;
     top: 50%;
@@ -132,9 +164,17 @@ body.is-loading .turn-hint {
 	margin: auto;
 }
 
-.flipbook .page small{
-	font-size: 14px;
-    margin-bottom: 10px;
+.page-number {
+  position: absolute;
+  top: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: "Bodoni Moda", serif;
+  font-size: 14px;
+  color: rgba(0, 0, 0, 0.5);
+  letter-spacing: 0.15em;
+  z-index: 20;
+  pointer-events: none;
 }
 
 @media (max-width: 1100px) {
