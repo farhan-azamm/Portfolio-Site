@@ -230,4 +230,9 @@ body:not(.is-loading) .loader {
         font-size: 11px;
     }
 
+    .page-number {
+        font-size: 10px;
+        top: 10px;
+    }
+
 }

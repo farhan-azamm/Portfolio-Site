@@ -45,10 +45,6 @@
           <div>
             <div class="work-header-label">MY WORK</div>
           </div>
-          <div class="work-header-right">
-            <div class="work-header-label">REAL PROJECTS. REAL IMPACT.</div>
-            <div class="work-header-line"></div>
-          </div>
         </div>
 
         <h3 class="work-main-title">
@@ -297,7 +293,9 @@
 
     // Keep the document fixed on touch devices; page turns still use Turn.js touch events.
     document.addEventListener("touchmove", function (event) {
-      event.preventDefault();
+      if (!event.target.closest('.projects-scroll')) {
+        event.preventDefault();
+      }
     }, { passive: false });
 
     window.addEventListener("wheel", function (event) {

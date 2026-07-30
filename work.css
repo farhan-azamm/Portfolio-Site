@@ -124,6 +124,9 @@
   scrollbar-width: thick;
   scrollbar-color: rgba(167, 25, 25, 0.4) transparent;
   padding-right: 6px;
+  scroll-padding-top: 10px;
+  touch-action: pan-y;
+  -webkit-overflow-scrolling: touch;
 }
 
 .project {
@@ -235,25 +238,8 @@
   font-weight: 400;
 }
 
-.work-page::-webkit-scrollbar {
-  width: 6px;
-}
-
-.work-page::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-.work-page::-webkit-scrollbar-thumb {
-  background: rgba(167, 25, 25, 0.4);
-  border-radius: 3px;
-}
-
-.work-page::-webkit-scrollbar-thumb:hover {
-  background: rgba(167, 25, 25, 0.65);
-}
-
 .projects-scroll::-webkit-scrollbar {
-  width: 12px;
+  width: 16px;
 }
 
 .projects-scroll::-webkit-scrollbar-track {
@@ -350,5 +336,9 @@
 
   .project-desc {
     font-size: 11px;
+  }
+
+  .project-media {
+    min-height: 220px;
   }
 }
